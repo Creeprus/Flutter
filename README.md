@@ -3,10 +3,11 @@
 ## Цель работы: 
 ### Изучить как работает процесс вёрстки на Flutter
 ## Ход работы:
- 
-Рисунок 1 - Первый макет
+ ![image](https://user-images.githubusercontent.com/92712690/191471075-b561071c-5b88-404c-8efe-6fc7da08c07a.png)
+Рисунок 1 - 4 макет
+
 Код main.dart:
- 
+ ```
 import 'package:flutter/material.dart';
 import 'package:flutter_application_4/screen.dart';
 
@@ -31,9 +32,9 @@ home: const Screen(),
 }
 }
  
-
+```
 Код screen.dart:
- 
+ ```
 import 'package:flutter/material.dart';
 
 class Screen extends StatefulWidget {
@@ -123,11 +124,13 @@ Container(
 }
 }
  
+```
+ ![image](https://user-images.githubusercontent.com/92712690/191471322-7c132c71-a667-4544-a7fc-0a479a31ab77.png)
 
- 
 Рисунок 2 - 2 макет
+
 Код main.dart:
- 
+ ```
 import 'package:flutter/material.dart';
 import 'package:flutter_application_5/screen.dart';
 
@@ -151,9 +154,9 @@ home: const Screen(),
 );
 }
 }
- 
+ ```
 Код screen.dart:
- 
+ ```
 import 'package:flutter/material.dart';
 class Screen extends StatefulWidget {
 const Screen({Key? key}) : super(key: key);
@@ -368,13 +371,13 @@ Expanded(flex:10,child: Row(
 );
 }
 }
- 
- 
+ ```
+ ![image](https://user-images.githubusercontent.com/92712690/191471356-0e6f4c95-8a1a-4d0e-9f86-3602469debde.png)
 Рисунок 3 - 3 макет часть 1
- 
+ ![image](https://user-images.githubusercontent.com/92712690/191471389-ef2c709b-a043-4b6e-bd9c-b18eeb48f714.png)
 Рисунок 4 - 3 макет часть 2
 Код main.dart:
- 
+ ```
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screen.dart';
 
@@ -397,9 +400,9 @@ class App extends StatelessWidget {
   }
 }
  
-
+```
 Код screen.dart:
- 
+ ```
 import 'package:flutter/material.dart';
 
 
@@ -848,6 +851,6 @@ size: 20.0,
     );
   }
 }
- 
+ ```
 
 Вывод: В процессе практической работы были получены навыки по составлению вёрстки на Flutter.
