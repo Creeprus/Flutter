@@ -24,12 +24,23 @@ class DataBaseHelper {
 
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
 
-
+    sqfliteFfiInit();
+       var db = await databaseFactoryFfi.openDatabase(_pathDB, options: OpenDatabaseOptions(
+        version: _version,
+        onUpgrade: (db,oldVersion,newVersion)=> onUpdateTable(db),
+        
+        onCreate: (db, version) async {
+        await onCreateTable(db);
+      }
+        
+        ));
+       
     } 
     else {
       database = await openDatabase(_pathDB, version: _version,
       
       onUpgrade:(db,oldVersion,newVersion)=> onUpdateTable(db),
+    
           onCreate: (db, version) async {
         await onCreateTable(db);
       });
@@ -43,7 +54,8 @@ class DataBaseHelper {
     {
       await db.execute(DataBaseRequest.tableCreateList[i]);
     }
-  }
+    await onInitTable(db); 
+     }
 
   Future<void> onInitTable (Database db) async{
     try

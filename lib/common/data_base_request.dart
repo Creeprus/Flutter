@@ -22,9 +22,9 @@ abstract class DataBaseRequest {
     tableMark,
     tableManufacturer,
     tableOwner,
+    tableCar,
     tableFavorite,
     tableUserInfo,
-    tableCar
   ];
   static const List<String> tableCreateList = [
     _createTableRole,
@@ -33,9 +33,9 @@ abstract class DataBaseRequest {
     _createTableMark,
     _createTableManufacturer,
     _createTableOwner,
+    _createTableCar,
     _createTableFavorite,
     _createTableUserInfo,
-    _createTableCar,
   ];
 
   static const String _createTableRole =
@@ -57,13 +57,13 @@ abstract class DataBaseRequest {
   static const String _createTableOwner =
       'CREATE TABLE "$tableOwner" ("id" INTEGER,"surname" TEXT NOT NULL ,"name" TEXT NOT NULL ,"patronymic" TEXT NOT NULL ,"date_of_acquzition" TEXT NOT NULL ,"date_of_selling" TEXT NOT NULL ,PRIMARY KEY("id"))';
   static const String _createTableFavorite =
-      'CREATE TABLE "$tableFavorite" ("id" INTEGER, INTEGER,"id_user" INTEGER,FOREIGN KEY("id_user") REFERENCES "Users"("id") on delete cascade,"id_car" INTEGER,FOREIGN KEY("id_car") REFERENCES "Car"("id") on delete cascade,PRIMARY KEY("id"))';
+      'CREATE TABLE "$tableFavorite" ("id" INTEGER, INTEGER,"id_user" INTEGER,"id_car" INTEGER,FOREIGN KEY("id_car") REFERENCES "Car"("id") on delete cascade,FOREIGN KEY("id_user") REFERENCES "Users"("id") on delete cascade,PRIMARY KEY("id"))';
 
   static const String _createTableUserInfo =
-      'CREATE TABLE "$tableUserInfo" (FOREIGN KEY"(id") REFERENCES "Users"("id") on delete cascade,"surname" TEXT NOT NULL ,"name" TEXT NOT NULL ,"patronymic" TEXT NULL ,"date_of_birth" TEXT NOT NULL';
+      'CREATE TABLE "$tableUserInfo" ("id" INTEGER,"surname" TEXT NOT NULL ,"name" TEXT NOT NULL ,"patronymic" TEXT NULL ,"date_of_birth" TEXT NOT NULL,FOREIGN KEY("id") REFERENCES "Users"("id") on delete cascade,PRIMARY KEY ("id"))';
 
   static const String _createTableCar =
-      'CREATE TABLE "$tableCar" ("id" INTEGER,"number" INTEGER NOT NULL UNIQUE,"date_of_creation" TEXT NOT NULL ,"cost" INTEGER NOT NULL ,"Model" TEXT NOT NULL ,"Photo" TEXT NOT NULL,"id_engine" INTEGER,FOREIGN KEY("id_engine") REFERENCES "Engine"("id") on delete cascade,"id_owner" INTEGER,FOREIGN KEY("id_owner") REFERENCES "Owner"("id") on delete cascade,"id_manufacturer" INTEGER,FOREIGN KEY("id_manufacturer") REFERENCES "Manufacturer"("id") on delete cascade,"id_engine" INTEGER,FOREIGN KEY("id_mark") REFERENCES "Mark"("id") on delete cascade,PRIMARY KEY("id"))';
+      'CREATE TABLE "$tableCar" ("id" INTEGER NOT NULL UNIQUE,"number" INTEGER NOT NULL UNIQUE,"date_of_creation" TEXT NOT NULL ,"cost" INTEGER NOT NULL ,	"Model" TEXT NOT NULL ,"Photo" TEXT NOT NULL,"id_engine" INTEGER,"id_owner" INTEGER,"id_mark" INTEGER,"id_manufacturer" INTEGER,FOREIGN KEY("id_engine") REFERENCES "Engine"("id") on delete cascade,FOREIGN KEY("id_owner") REFERENCES "Owner"("id") on delete cascade,FOREIGN KEY("id_manufacturer") REFERENCES "Manufacturer"("id") on delete cascade,FOREIGN KEY("id_mark") REFERENCES "Mark"("id") on delete cascade,FOREIGN KEY("id_manufacturer") REFERENCES "Manufacturer"("id") on delete cascade,PRIMARY KEY("id"))';
 
   static String deleteTable(String table) => 'DROP TABLE $table';
 }
