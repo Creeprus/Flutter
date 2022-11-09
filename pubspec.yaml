@@ -44,7 +44,8 @@ dependencies:
   path_provider: ^2.0.11
   # Хеширование данных
   crypto: ^3.0.2
-
+  #Функциональное программирование
+  dartz: ^0.10.01
 
 dev_dependencies:
   flutter_test:
