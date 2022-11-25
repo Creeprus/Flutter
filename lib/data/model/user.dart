@@ -37,6 +37,9 @@ class User extends UserEntity {
   Map<String, dynamic> toMap() {
     return {'login': login, 'password': Crypto.encoding(password), 'role_id': role_id.id,'userinfo_id':userinfo_id.id};
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 09ac2a6 (PR3)
+=======
 >>>>>>> parent of 09ac2a6 (PR3)
 =======
 >>>>>>> parent of 09ac2a6 (PR3)
@@ -48,8 +51,11 @@ class User extends UserEntity {
       password: json['password'],
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       role_id: json['role_id'],
 =======
+=======
+>>>>>>> parent of 09ac2a6 (PR3)
 =======
 >>>>>>> parent of 09ac2a6 (PR3)
       role_id: RoleEnum.values.firstWhere(
@@ -57,6 +63,9 @@ class User extends UserEntity {
       ),
       userinfo_id:UserInfo.toFromMap(json)
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 09ac2a6 (PR3)
+=======
 >>>>>>> parent of 09ac2a6 (PR3)
 =======
 >>>>>>> parent of 09ac2a6 (PR3)

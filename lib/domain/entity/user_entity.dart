@@ -4,11 +4,14 @@ class UserEntity {
   final String password;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   final int role_id;
 
   UserEntity(
       {required this.login, required this.password, required this.role_id});
 =======
+=======
+>>>>>>> parent of 09ac2a6 (PR3)
 =======
 >>>>>>> parent of 09ac2a6 (PR3)
   final RoleEnum role_id;
