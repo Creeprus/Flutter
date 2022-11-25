@@ -21,7 +21,7 @@ class ClickCubit extends Cubit<ClickState> {
 
   void ClickMinus(bool darkmode) {
     if (count <= 1) {
-      emit(ClickError('Счётчик не может быть равен 0'));
+      emit(ClickError('Счётчик не можетбыть равен 0'));
     } else {
       if(darkmode==true)
       count-=2;
