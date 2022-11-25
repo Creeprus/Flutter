@@ -38,6 +38,9 @@ class User extends UserEntity {
     return {'login': login, 'password': Crypto.encoding(password), 'role_id': role_id.id,'userinfo_id':userinfo_id.id};
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 09ac2a6 (PR3)
+=======
 >>>>>>> parent of 09ac2a6 (PR3)
 =======
 >>>>>>> parent of 09ac2a6 (PR3)
@@ -52,8 +55,11 @@ class User extends UserEntity {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       role_id: json['role_id'],
 =======
+=======
+>>>>>>> parent of 09ac2a6 (PR3)
 =======
 >>>>>>> parent of 09ac2a6 (PR3)
 =======
@@ -64,6 +70,9 @@ class User extends UserEntity {
       userinfo_id:UserInfo.toFromMap(json)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 09ac2a6 (PR3)
+=======
 >>>>>>> parent of 09ac2a6 (PR3)
 =======
 >>>>>>> parent of 09ac2a6 (PR3)
