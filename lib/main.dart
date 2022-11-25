@@ -4,6 +4,7 @@ import 'core/db/data_base_helper.dart';
 
 void main() {
 <<<<<<< HEAD
+<<<<<<< HEAD
   WidgetsFlutterBinding.ensureInitialized();
   DataBaseHelper.instance.init();
   runApp(const MyApp());
@@ -21,6 +22,11 @@ class MyApp extends StatelessWidget {
   runApp( App());
 }
 
+=======
+  runApp( App());
+}
+
+>>>>>>> parent of 09ac2a6 (PR3)
 
  class App extends StatelessWidget {
    App({super.key});
@@ -95,5 +101,9 @@ class MainPage extends StatelessWidget {
       ]),
     );
   }
+<<<<<<< HEAD
+}
+>>>>>>> parent of 09ac2a6 (PR3)
+=======
 }
 >>>>>>> parent of 09ac2a6 (PR3)

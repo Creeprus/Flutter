@@ -49,6 +49,9 @@ dependencies:
 =======
   #Функциональное программирование
   dartz: ^0.10.01
+<<<<<<< HEAD
+>>>>>>> parent of 09ac2a6 (PR3)
+=======
 >>>>>>> parent of 09ac2a6 (PR3)
 
 dev_dependencies:
