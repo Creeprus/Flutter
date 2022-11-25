@@ -1,9 +1,23 @@
 import 'package:flutter/material.dart';
 
-import 'approuter/app_router.dart';
 import 'core/db/data_base_helper.dart';
 
 void main() {
+<<<<<<< HEAD
+  WidgetsFlutterBinding.ensureInitialized();
+  DataBaseHelper.instance.init();
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp();
+  }
+}
+=======
   runApp( App());
 }
 
@@ -82,3 +96,4 @@ class MainPage extends StatelessWidget {
     );
   }
 }
+>>>>>>> parent of 09ac2a6 (PR3)
