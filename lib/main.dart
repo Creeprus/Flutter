@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/core/repositories/auth_repositories_impl.dart';
+import 'package:flutter_application_1/cubit/regshower_cubit.dart';
 import 'package:flutter_application_1/domain/entity/role_entity.dart';
 import 'package:flutter_application_1/domain/repositrories/auth_repositories.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'approuter/app_router.dart';
 import 'core/db/data_base_helper.dart';
@@ -19,118 +21,126 @@ class App extends StatelessWidget {
   AppRouter router = AppRouter();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateRoute: router.generateRouter,
-      initialRoute: log,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => RegshowerCubit()),
+      ],
+      child: BlocBuilder<RegshowerCubit, RegshowerState>(
+        builder: (context, state) {
+          return MaterialApp(
+              title: 'Flutter Demo',
+              onGenerateRoute: router.generateRouter,
+              initialRoute: log,
+              theme: context.read<RegshowerCubit>().themeData);
+        },
+      ),
     );
   }
 }
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _Login();
 }
-class _Login extends  State<Login> {
 
+class _Login extends State<Login> {
   GlobalKey<FormState> _key = GlobalKey();
 
-TextEditingController _loginController = TextEditingController();
-TextEditingController _passwordController = TextEditingController();
+  TextEditingController _loginController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Form(
-            key: _key,
-        child:Column(children: [
-        Text('Логин'),
-        
-         TextFormField(
-          maxLength: 25,
-          controller: _loginController,
-     validator: (value) {
-           if (value!.isEmpty) {
-              return 'Логин не должен быть пустым';
-            }
-            if (value.length < 5) {
-              return 'Логин должен быть не менее 5 символов';
-            }
-              if (value.contains(RegExp(r"[а-яА-Я]"),0)) {
-              return 'Только английские символы ';
-            }
-           
-     },
-          decoration: const InputDecoration(
-            hintText: 'Логин',
-            border: OutlineInputBorder(),
-          ),
-        ),
+          child: Form(
+              key: _key,
+              child: Column(
+                children: [
+                  Text('Логин'),
 
-        //Пароль
-        TextFormField(
-          maxLength: 30,
-          controller: _passwordController,
-                validator: (value) {
-            if (value!.isEmpty) {
-              return 'Пароль не должен быть пустым';
-            }
-            if (value.length < 5) {
-              return 'Пароль должен быть не менее 5 символов';
-            }
-              if (value.contains(RegExp(r"[а-яА-Я]"),0)) {
-              return 'Только английские символы ';
-            }
-            return null;
-          },
-          decoration: const InputDecoration(
-            hintText: 'Пароль',
-            border: OutlineInputBorder(),
-          ),
-        ),
-         SizedBox(
-                  height: 35,
-                  child: ElevatedButton(
-                    onPressed: () {
-                    
+                  TextFormField(
+                    maxLength: 25,
+                    controller: _loginController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Логин не должен быть пустым';
+                      }
+                      if (value.length < 5) {
+                        return 'Логин должен быть не менее 5 символов';
+                      }
+                      if (value.contains(RegExp(r"[а-яА-Я]"), 0)) {
+                        return 'Только английские символы ';
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Логин',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+
+                  //Пароль
+                  TextFormField(
+                    maxLength: 30,
+                    controller: _passwordController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Пароль не должен быть пустым';
+                      }
+                      if (value.length < 5) {
+                        return 'Пароль должен быть не менее 5 символов';
+                      }
+                      if (value.contains(RegExp(r"[а-яА-Я]"), 0)) {
+                        return 'Только английские символы ';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      hintText: 'Пароль',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 35,
+                    child: ElevatedButton(
+                      onPressed: () {
                         if (_key.currentState!.validate()) {
-                        signIn();
-                      } else {}
-                    
-                    },
-                    child: const Text(
-                      'Авторизация',
-                      style: TextStyle(fontSize: 18),
+                          signIn();
+                        } else {}
+                      },
+                      child: const Text(
+                        'Авторизация',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
-                ),
-                 SizedBox(
-                  height: 35,
-                  child: ElevatedButton(
-                    onPressed: () {
-                       Navigator.pushReplacementNamed(context, reg);
-                    },
-                    child: const Text(
-                      'Регистрация',
-                      style: TextStyle(fontSize: 18),
+                  SizedBox(
+                    height: 35,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, reg);
+                      },
+                      child: const Text(
+                        'Регистрация',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
-                ),
-      ],))),
-      
+                ],
+              ))),
     );
-    
   }
+
   void signIn() async {
     final AuthRepositoriesImpl auth = AuthRepositoriesImpl();
     var result = await Auth(auth).signIn(AuthParamsLogin(
-      login: _loginController.text,
-      password: _passwordController.text
-    ));
+        login: _loginController.text, password: _passwordController.text));
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Ошибка авторизации. Проверьте правильность ввода данных"),
+          content:
+              Text("Ошибка авторизации. Проверьте правильность ввода данных"),
         ),
       );
     }, (r) {
@@ -141,13 +151,12 @@ TextEditingController _passwordController = TextEditingController();
             break;
           }
         case RoleEnum.user:
-        Navigator.pushReplacementNamed(context, userpage);
+          Navigator.pushReplacementNamed(context, userpage);
           break;
       }
     });
   }
 }
-
 
 class Registration extends StatefulWidget {
   const Registration({Key? key}) : super(key: key);
@@ -157,16 +166,14 @@ class Registration extends StatefulWidget {
 }
 
 class _Registration extends State<Registration> {
-
   GlobalKey<FormState> _key = GlobalKey();
 
-TextEditingController _loginController = TextEditingController();
-TextEditingController _passwordController = TextEditingController();
-TextEditingController _surnameController = TextEditingController();
-TextEditingController _nameController = TextEditingController();
-TextEditingController _patronymicController = TextEditingController();
-TextEditingController _dateofbirthController = TextEditingController();
-
+  TextEditingController _loginController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _surnameController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _patronymicController = TextEditingController();
+  TextEditingController _dateofbirthController = TextEditingController();
 
   bool isObscure = true;
 
@@ -188,158 +195,156 @@ TextEditingController _dateofbirthController = TextEditingController();
                   style: TextStyle(fontSize: 26),
                 ),
                 const Spacer(),
-             
-               TextFormField(
-          maxLength: 25,
-          controller: _loginController,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Логин не должен быть пустым';
-            }
-            if (value.length < 5) {
-              return 'Логин должен быть не менее 5 символов';
-            }
-              if (value.contains(RegExp(r"[а-яА-Я]"),0)) {
-              return 'Только английские символы ';
-            }
-           
-            return null;
-          },
-          decoration: const InputDecoration(
-            hintText: 'Логин',
-            border: OutlineInputBorder(),
-          ),
-        ),
 
-        //Пароль
-        TextFormField(
-          maxLength: 30,
-          controller: _passwordController,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Пароль не должен быть пустым';
-            }
-            if (value.length < 5) {
-              return 'Пароль должен быть не менее 5 символов';
-            }
-               if (value.contains(RegExp(r"[а-яА-Я0]"),0)) {
-              return 'Только английские символы ';
-            }
-            return null;
-          },
-          decoration: const InputDecoration(
-            hintText: 'Пароль',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        //Фамилия
-        TextFormField(
-          maxLength: 50,
-          controller: _surnameController,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Фамилия не должна быть пустым';
-            }
-            if (value.length < 2) {
-              return 'Фамилия должна быть не менее 2 символов';
-              
-            }
-              if (value.contains(RegExp(r"[A-Za-z]"),0)) {
-              return 'Только русские символы';
-            }
-               if (value.contains(RegExp(r'[0-9]'),0)) {
-              return 'Цифры недопустимы';
-            }
-            return null;
-          },
-          decoration: const InputDecoration(
-            hintText: 'Фамилия',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        //Имя
-        TextFormField(
-          maxLength: 50,
-          controller: _nameController,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Имя не должно быть пустым';
-            }
-            if (value.length < 2) {
-              return 'Имя должно быть не менее 2 символов';
-            }
-               if (value.contains(RegExp(r"[A-Za-z]"),0)) {
-              return 'Только русские символы';
-            }
-               if (value.contains(RegExp(r'[0-9]'),0)) {
-              return 'Цифры недопустимы';
-            }
-            return null;
-          },
-          decoration: const InputDecoration(
-            hintText: 'Имя',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        //Отчество
-        TextFormField(
-          maxLength: 50,
-          controller: _patronymicController,
-          validator: (value) {
-            if (value!.isEmpty) {
-              return 'Отчество не должно быть пустым';
-            }
-            if (value.length < 6) {
-              return 'Отчество должно быть не менее 6 символов';
-            }
-                  if (value.contains(RegExp(r"[A-Za-z]"),0)) {
-              return 'Только русские символы';
-            }
-               if (value.contains(RegExp(r'[0-9]'),0)) {
-              return 'Цифры недопустимы';
-            }
-            return null;
-          },
-          decoration: const InputDecoration(
-            hintText: 'Отчество',
-            border: OutlineInputBorder(),
-          ),
-        ),
-        //Дата рождения
-        TextField(
-          controller: _dateofbirthController,
-          //editing controller of this TextField
-          decoration: InputDecoration(
-              icon: Icon(Icons.calendar_today), //icon of text field
-              labelText: "Enter Date" //label text of field
-              ),
-          readOnly: false,
-          
-          //set it true, so that user will not able to edit text
-          onTap: () async {
-            DateTime? pickedDate = await showDatePicker(
-                context: context,
-                
-                initialDate: DateTime.now(),
-                firstDate: DateTime(1950),
-                //DateTime.now() - not to allow to choose before today.
-                lastDate: DateTime(2100));
+                TextFormField(
+                  maxLength: 25,
+                  controller: _loginController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Логин не должен быть пустым';
+                    }
+                    if (value.length < 5) {
+                      return 'Логин должен быть не менее 5 символов';
+                    }
+                    if (value.contains(RegExp(r"[а-яА-Я]"), 0)) {
+                      return 'Только английские символы ';
+                    }
 
-            if (pickedDate != null) {
-              print(
-                  pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-              String formattedDate =
-                  DateFormat('yyyy-MM-dd').format(pickedDate);
-              print(
-                  formattedDate); //formatted date output using intl package =>  2021-03-16
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Логин',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
 
-              _dateofbirthController.text =
-                  formattedDate; //set output date to TextField value.
+                //Пароль
+                TextFormField(
+                  maxLength: 30,
+                  controller: _passwordController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Пароль не должен быть пустым';
+                    }
+                    if (value.length < 5) {
+                      return 'Пароль должен быть не менее 5 символов';
+                    }
+                    if (value.contains(RegExp(r"[а-яА-Я0]"), 0)) {
+                      return 'Только английские символы ';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Пароль',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                //Фамилия
+                TextFormField(
+                  maxLength: 50,
+                  controller: _surnameController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Фамилия не должна быть пустым';
+                    }
+                    if (value.length < 2) {
+                      return 'Фамилия должна быть не менее 2 символов';
+                    }
+                    if (value.contains(RegExp(r"[A-Za-z]"), 0)) {
+                      return 'Только русские символы';
+                    }
+                    if (value.contains(RegExp(r'[0-9]'), 0)) {
+                      return 'Цифры недопустимы';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Фамилия',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                //Имя
+                TextFormField(
+                  maxLength: 50,
+                  controller: _nameController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Имя не должно быть пустым';
+                    }
+                    if (value.length < 2) {
+                      return 'Имя должно быть не менее 2 символов';
+                    }
+                    if (value.contains(RegExp(r"[A-Za-z]"), 0)) {
+                      return 'Только русские символы';
+                    }
+                    if (value.contains(RegExp(r'[0-9]'), 0)) {
+                      return 'Цифры недопустимы';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Имя',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                //Отчество
+                TextFormField(
+                  maxLength: 50,
+                  controller: _patronymicController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Отчество не должно быть пустым';
+                    }
+                    if (value.length < 6) {
+                      return 'Отчество должно быть не менее 6 символов';
+                    }
+                    if (value.contains(RegExp(r"[A-Za-z]"), 0)) {
+                      return 'Только русские символы';
+                    }
+                    if (value.contains(RegExp(r'[0-9]'), 0)) {
+                      return 'Цифры недопустимы';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                    hintText: 'Отчество',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                //Дата рождения
+                TextField(
+                  controller: _dateofbirthController,
+                  //editing controller of this TextField
+                  decoration: InputDecoration(
+                      icon: Icon(Icons.calendar_today), //icon of text field
+                      labelText: "Enter Date" //label text of field
+                      ),
+                  readOnly: false,
 
-            } else {}
-          },
-        ),
-             
+                  //set it true, so that user will not able to edit text
+                  onTap: () async {
+                    DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1950),
+                        //DateTime.now() - not to allow to choose before today.
+                        lastDate: DateTime(2100));
+
+                    if (pickedDate != null) {
+                      print(
+                          pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                      String formattedDate =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
+                      print(
+                          formattedDate); //formatted date output using intl package =>  2021-03-16
+
+                      _dateofbirthController.text =
+                          formattedDate; //set output date to TextField value.
+
+                    } else {}
+                  },
+                ),
+
                 SizedBox(
                   height: 35,
                   child: ElevatedButton(
@@ -358,7 +363,8 @@ TextEditingController _dateofbirthController = TextEditingController();
                 Align(
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
-                    onPressed: () => Navigator.pushReplacementNamed(context,log),
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, log),
                     style: ElevatedButton.styleFrom(
                       shape: const CircleBorder(),
                       padding: const EdgeInsets.all(15),
@@ -378,13 +384,12 @@ TextEditingController _dateofbirthController = TextEditingController();
     final AuthRepositoriesImpl auth = AuthRepositoriesImpl();
 
     var result = await Auth(auth).signUp(AuthParams(
- login: _loginController.text,
+        login: _loginController.text,
         password: _passwordController.text,
         date_of_birth: _dateofbirthController.text,
         name: _nameController.text,
         patronymic: _patronymicController.text,
-        surname: _surnameController.text)
-    );
+        surname: _surnameController.text));
 
     result.fold((l) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -393,7 +398,7 @@ TextEditingController _dateofbirthController = TextEditingController();
         ),
       );
     }, (r) {
-      Navigator.pushNamed(context,adminpage);
+      Navigator.pushNamed(context, adminpage);
     });
   }
 }
@@ -404,35 +409,46 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        Text('Экран админа'),
-    
-          
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, log);
-            },
-            child: Text('Перейти на логин')),
-      ]),
+      body: BlocBuilder<RegshowerCubit, RegshowerState>(
+        builder: (context, state) {
+          if (state is RegshowerState) {
+            context.read<RegshowerCubit>().changethemeAdmin(1);
+          }
+          return Column(children: [
+            Text('Экран админа'),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, log);
+                },
+                child: Text('Перейти на логин')),
+          ]);
+        },
+      ),
     );
   }
 }
+
 class UserPage extends StatelessWidget {
   const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: [
-        Text('Экран пользователя'),
-    
-          
-        ElevatedButton(
-            onPressed: () {
-              Navigator.pushNamed(context, log);
-            },
-            child: Text('Перейти на логин')),
-      ]),
+      body: BlocBuilder<RegshowerCubit, RegshowerState>(
+        builder: (context, state) {
+          if (state is RegshowerState) {
+            context.read<RegshowerCubit>().changethemeAdmin(2);
+          }
+          return Column(children: [
+            Text('Экран пользователя'),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, log);
+                },
+                child: Text('Перейти на логин')),
+          ]);
+        },
+      ),
     );
   }
 }
