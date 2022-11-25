@@ -46,7 +46,6 @@ dependencies:
   crypto: ^3.0.2
   #Функциональное программирование
   dartz: ^0.10.01
-  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

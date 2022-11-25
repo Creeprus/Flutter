@@ -5,8 +5,7 @@ import '../main.dart';
 
 const  String log='log';
 const  String reg='reg';
-const  String adminpage='adminpage';
-const String userpage='userpage';
+const  String mainpage='mainpage';
 class AppRouter{
  Route<dynamic>? generateRouter(RouteSettings settings){
 
@@ -18,11 +17,8 @@ case log:{
 case reg:{
     return MaterialPageRoute(builder: (_)=>Registration());
 }
-case adminpage:{
+case mainpage:{
     return MaterialPageRoute(builder: (_)=>MainPage());
-}
-case userpage:{
-    return MaterialPageRoute(builder: (_)=>UserPage());
 }
   }
  }

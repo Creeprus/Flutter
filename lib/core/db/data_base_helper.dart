@@ -11,10 +11,9 @@ class DataBaseHelper {
   static final DataBaseHelper instance = DataBaseHelper._instance();
   DataBaseHelper._instance();
 
-  late final Database database;
   late final Directory _appDocumentDirectory;
   late final String _pathDB;
-
+  late final Database database;
   final int _version = 1;
 
   Future<void> init() async {
@@ -25,8 +24,8 @@ class DataBaseHelper {
 
     if (Platform.isWindows || Platform.isMacOS || Platform.isLinux) {
 
-   sqfliteFfiInit();
-        database = await databaseFactoryFfi.openDatabase(_pathDB, options: OpenDatabaseOptions(
+    sqfliteFfiInit();
+       var db = await databaseFactoryFfi.openDatabase(_pathDB, options: OpenDatabaseOptions(
         version: _version,
         onUpgrade: (db,oldVersion,newVersion)=> onUpdateTable(db),
         

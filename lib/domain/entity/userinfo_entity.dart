@@ -6,9 +6,7 @@ class UserInfoEntity {
   final String date_of_birth;
 
   UserInfoEntity(
-    
-      {this.id=0,
-        required this.surname,
+      {required this.surname,
       required this.name,
       required this.patronymic,
       required this.date_of_birth,

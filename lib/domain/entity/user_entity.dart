@@ -6,14 +6,13 @@ class UserEntity {
   late int id;
   final String login;
   final String password;
-  final RoleEnum id_role;
+  final RoleEnum role_id;
   final UserInfo userinfo_id;
 
   UserEntity(
 
-      {    this.id=0,
-      required this.login,
+      {    this.id=0,required this.login,
       required this.password,
-      required this.id_role,
+      required this.role_id,
       required this.userinfo_id});
 }
