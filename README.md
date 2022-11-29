@@ -1,16 +1,32 @@
-# flutter_application_6
+ПРАКТИЧЕСКАЯ РАБОТА №4
 
-A new Flutter project.
+Тема: Cubit
 
-## Getting Started
+Цель работы: Изучит работу Cubit и Bloc. Выполнить соответствующие задание.
 
-This project is a starting point for a Flutter application.
+Ход работы:
 
-A few resources to get you started if this is your first Flutter project:
+ 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Необходимо сделать Cubit, который в зависимости от текущей темы прибавляет +1 и отнимает -1 если светлая, если тёмная +2 и -2 соответственно. Результат и текущую тему необходимо вывести в List
+  
+  ![image](https://user-images.githubusercontent.com/92712690/204499043-e62c20cf-4627-48bb-8667-2b93be6d0cd5.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Рисунок 42 – Форма
+
+![image](https://user-images.githubusercontent.com/92712690/204499360-7ce48103-6ffe-4ff7-b67b-ea8e829c2975.png)
+ 
+Рисунок 43 - Прибавление
+
+ ![image](https://user-images.githubusercontent.com/92712690/204499379-c200ce8f-cb91-4cf6-8b72-c00d9c175430.png)
+
+Рисунок 44 – Уменьшение
+
+ ![image](https://user-images.githubusercontent.com/92712690/204499408-d3e4f4db-a88f-424c-ac42-ee60e0d61930.png)
+
+Рисунок 46 – Прибавление
+ 
+ ![image](https://user-images.githubusercontent.com/92712690/204499437-b5e03f96-42a2-45b0-ae9a-ae083b68de8d.png)
+
+Рисунок 47 – Убавление
+Вывод: В процессе практической работы был изучен принцип работы Cubit и Bloc и выполнены задания.
