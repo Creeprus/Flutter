@@ -156,6 +156,7 @@ class _TablePage extends State<TablePage> {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
+  List<Text> myWidgetList=<Text>[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,7 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            Row(
+                Row(
               children: [
                 FloatingActionButton(
                   onPressed: () {
@@ -217,15 +218,34 @@ class _MyHomePageState extends State<MyHomePage> {
                   tooltip: 'Сменить тему',
                   child: const Icon(Icons.change_circle),
                 ),
-                FloatingActionButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, log);
-                  },
-                  tooltip: 'Перейти на другой виджет',
-                  child: const Icon(Icons.change_history),
-                ),
+                // FloatingActionButton(
+                //   onPressed: () {
+                //     Navigator.pushNamed(context, log);
+                //   },
+                //   tooltip: 'Перейти на другой виджет',
+                //   child: const Icon(Icons.change_history),
+                // ),
               ],
             ),
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount:1,
+                itemBuilder: (context,index){
+                  return    BlocBuilder<ClickCubit, ClickState>(
+            
+            builder: (context, state) {
+              if(state is ClickState)
+              {
+                myWidgetList=context.read<ClickCubit>().result;
+              
+              return ListTile(title:Column(children: myWidgetList));
+              }
+               return Text("Лист пуст");
+            },
+          );
+                }),
+        
           ],
         ),
       ),

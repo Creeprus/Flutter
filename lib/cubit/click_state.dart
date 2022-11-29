@@ -5,7 +5,10 @@ abstract class ClickState {}
 
 class ClickInitial extends ClickState {}
 
-class onClick extends ClickState{}
+class onClick extends ClickState{
+
+  
+}
 
 class ClickError extends ClickState
 {
