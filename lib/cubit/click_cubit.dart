@@ -5,24 +5,23 @@ import 'package:meta/meta.dart';
 part 'click_state.dart';
 
 class ClickCubit extends Cubit<ClickState> {
-  ClickCubit() : super(ClickInitial());
+  ClickCubit() : super(ClickIniltial(0));
   int count = 0;
-  var result=<Text>[];
+  var result = <ClickCubitModel>[];
   void Click(bool darkmode) {
     if (count >= 10) {
       emit(ClickError('Счёткик равен 10'));
     } else {
-        if(darkmode==true)
-        {
-      count+=2;
-      result.add(Text(count.toString()+" Тёмная тема"));
-        }
-      else
-      {
-      count++;
-            result.add(Text(count.toString()+" Светлая тема"));
+      if (darkmode == true) {
+        count += 2;
+        result.add(ClickCubitModel(count, ' Темная тема'));
+        // result.add(Text(count.toString()+" Тёмная тема"));
+
+      } else {
+        count++;
+        result.add(ClickCubitModel(count, ' Светлая тема'));
       }
-      emit(onClick());
+      emit(onClick(count));
     }
   }
 
@@ -30,17 +29,21 @@ class ClickCubit extends Cubit<ClickState> {
     if (count <= 1) {
       emit(ClickError('Счётчик не можетбыть равен 0'));
     } else {
-      if(darkmode==true)
-      {
-      count-=2;
-            result.add(Text(count.toString()+" Тёмная тема"));
+      if (darkmode == true) {
+        count -= 2;
+        result.add(ClickCubitModel(count, ' Темная тема'));
+      } else {
+        count--;
+        result.add(ClickCubitModel(count, ' Светлая тема'));
       }
-      else
-      {
-      count--; 
-            result.add(Text(count.toString()+" Светлая тема"));
-      }
-      emit(onClick());
+      emit(onClick(count));
     }
   }
+}
+
+class ClickCubitModel {
+  final int count;
+  final String message;
+
+  ClickCubitModel(this.count, this.message);
 }

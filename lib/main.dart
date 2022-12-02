@@ -21,14 +21,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ThemechangerCubit()),
         BlocProvider(create: (context) => ListeditCubit()),
       ],
-      child: BlocBuilder<ThemechangerCubit, ThemechangerState>(
+      child: BlocBuilder<ThemechangerCubit, ThemeMode>(
         builder: (context, state) {
           return MaterialApp(
             title: 'Flutter Demo',
             onGenerateRoute: router.generateRouter,
             darkTheme: ThemeData.dark(),
             initialRoute: mainpage,
-            themeMode: context.read<ThemechangerCubit>().mode,
+            themeMode: state,
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
@@ -55,28 +55,28 @@ class TablePage extends StatefulWidget {
 
 class _TablePage extends State<TablePage> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-  
+
   final List<String> products =
       List<String>.generate(1, (i) => "Product List: $i");
-      List<Text> myWidgetList=<Text>[];
+  List<Text> myWidgetList = <Text>[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
 // body:Column(children: [
- 
+
 //        ListView(
 //         children: [
-          
+
 //           Column(children:[
-           
+
 //           BlocBuilder<ListeditCubit, ListeditState>(
-            
+
 //             builder: (context, state) {
 //               if(state is ListChanger)
 //               {
 //                 myWidgetList=context.read<ListeditCubit>().result;
-              
+
 //               return myWidgetList;
 //               }
 //               return   Text("Лист пуст");
@@ -85,9 +85,9 @@ class _TablePage extends State<TablePage> {
 //           ],
 //           ),
 //         ],
-     
+
 //       ),
-    
+
 //            Row(
 //             children: [
 //               FloatingActionButton(
@@ -104,51 +104,50 @@ class _TablePage extends State<TablePage> {
 //               ),
 //             ],
 //           ),
-       
+
 // ],)
- body:SingleChildScrollView(
+      body: SingleChildScrollView(
         physics: ScrollPhysics(),
         child: Column(
           children: <Widget>[
-           
-             ListView.builder(
+            ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount:1,
-                itemBuilder: (context,index){
-                  return    BlocBuilder<ListeditCubit, ListeditState>(
-            
-            builder: (context, state) {
-              if(state is ListChanger)
-              {
-                myWidgetList=context.read<ListeditCubit>().result;
-              
-              return ListTile(title:Column(children: myWidgetList));
-              }
-               return Text("Лист пуст");
-            },
-          );
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return BlocBuilder<ListeditCubit, ListeditState>(
+                    builder: (context, state) {
+                      if (state is ListChanger) {
+                        myWidgetList = context.read<ListeditCubit>().result;
+
+                        return ListTile(title: Column(children: myWidgetList));
+                      }
+                      return Text("Лист пуст");
+                    },
+                  );
                 }),
-                         Row(
-            children: [
-              FloatingActionButton(
-                onPressed: () {
-                  context.read<ListeditCubit>().AddList();
-                },
-                tooltip: 'Добавить элемент',
-                child: const Icon(Icons.add),
-              ),
-              FloatingActionButton(
-                onPressed: () {      context.read<ListeditCubit>().RemoveFromList();},
-                tooltip: 'Удалить элемент',
-                child: const Icon(Icons.remove),
-              ),
-            ],
-          ),
+            Row(
+              children: [
+                FloatingActionButton(
+                  onPressed: () {
+                    context.read<ListeditCubit>().AddList();
+                  },
+                  tooltip: 'Добавить элемент',
+                  child: const Icon(Icons.add),
+                ),
+                FloatingActionButton(
+                  onPressed: () {
+                    context.read<ListeditCubit>().RemoveFromList();
+                  },
+                  tooltip: 'Удалить элемент',
+                  child: const Icon(Icons.remove),
+                ),
+              ],
+            ),
           ],
         ),
       ),
-          
+
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
@@ -156,7 +155,7 @@ class _TablePage extends State<TablePage> {
 
 class _MyHomePageState extends State<MyHomePage> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey();
-  List<Text> myWidgetList=<Text>[];
+  List<ClickCubitModel> myWidgetList = <ClickCubitModel>[];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -189,7 +188,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-                Row(
+            Row(
               children: [
                 FloatingActionButton(
                   onPressed: () {
@@ -205,8 +204,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   onPressed: () {
                     final ThemeData mode = Theme.of(context);
                     var brightness = mode.brightness;
-                    bool isDarkMode = brightness == Brightness.dark;
-                    context.read<ClickCubit>().ClickMinus(isDarkMode);
+                    context
+                        .read<ClickCubit>()
+                        .ClickMinus(brightness == Brightness.dark);
                   },
                   tooltip: 'Минус',
                   child: const Icon(Icons.remove_circle),
@@ -227,25 +227,25 @@ class _MyHomePageState extends State<MyHomePage> {
                 // ),
               ],
             ),
-              ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount:1,
-                itemBuilder: (context,index){
-                  return    BlocBuilder<ClickCubit, ClickState>(
-            
-            builder: (context, state) {
-              if(state is ClickState)
-              {
-                myWidgetList=context.read<ClickCubit>().result;
-              
-              return ListTile(title:Column(children: myWidgetList));
-              }
-               return Text("Лист пуст");
-            },
-          );
-                }),
-        
+            Expanded(
+              child: BlocBuilder<ClickCubit, ClickState>(
+                builder: (context, state) {
+                  myWidgetList = context.read<ClickCubit>().result;
+
+                  return ListView.builder(
+                      itemCount: myWidgetList.length,
+                      itemBuilder: (context, index) {
+                        if (myWidgetList.isNotEmpty)
+                          return ListTile(
+                              title: Text(myWidgetList[index].count.toString() +
+                                  ", " +
+                                  myWidgetList[index].message));
+                        else
+                          return Text("Лист пуст");
+                      });
+                },
+              ),
+            ),
           ],
         ),
       ),

@@ -1,11 +1,18 @@
 part of 'click_cubit.dart';
 
 @immutable
-abstract class ClickState {}
+abstract class ClickState {
+  final int count;
 
-class ClickInitial extends ClickState {}
+  ClickState(this.count);
+}
+
+class ClickIniltial extends ClickState {
+  ClickIniltial(super.count);
+}
 
 class onClick extends ClickState{
+  onClick(super.count);
 
   
 }
@@ -14,7 +21,7 @@ class ClickError extends ClickState
 {
 final String message;
 
-ClickError(this.message);
+ClickError(this.message) : super(0);
 }
 
 
