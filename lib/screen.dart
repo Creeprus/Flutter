@@ -7,10 +7,10 @@ final int count;
 
 @override
 Widget build(BuildContext context){
- final arguments = (ModalRoute.of(context)?.settings.arguments ?? 0) as int;
+ final arguments = (ModalRoute.of(context)?.settings.arguments ) as List<Object>;
 return Scaffold(
 appBar: AppBar(),
-body: Text("Текущее значение: "+arguments.toString()),
+body: Text(arguments[1].toString()+': '+arguments[0].toString()),
 );
 }
 }

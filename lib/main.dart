@@ -40,18 +40,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String message="Текущее значение";
 
   void _incrementCounter() async {
     setState(() {
       _counter++;
     });
     await widget.sharedPreferences.setInt("counter", _counter);
+     await widget.sharedPreferences.setString("message", message);
   }
 
-
+String currenttext="";
   @override
   void initState()  { 
     _counter =  widget.sharedPreferences.getInt('counter') ?? 0 ;
+     currenttext =  widget.sharedPreferences.getString('message') ?? '' ;
     super.initState();
   }
 
@@ -65,9 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
+            Text(widget.sharedPreferences.getString('message')??''),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
@@ -81,7 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   //               count: _counter,
                                 
                   //             )));
-                    Navigator.pushNamed(context,"/second", arguments:  _counter
+                  List<Object> toScreen=<Object>[];
+                  toScreen.add(_counter);
+                  toScreen.add(widget.sharedPreferences.getString('message')??'');
+
+                    Navigator.pushNamed(context,"/second", arguments:  toScreen
                      );
                 },
                 child: Text(''))
