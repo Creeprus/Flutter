@@ -1,32 +1,28 @@
-ПРАКТИЧЕСКАЯ РАБОТА №4
-
-Тема: Cubit
-
-Цель работы: Изучит работу Cubit и Bloc. Выполнить соответствующие задание.
-
+ПРАКТИЧЕСКАЯ РАБОТА №5
+Тема: ShareProvider
+Цель работы: 
+Изучить как работает ShareProvider. Опционально использовать arguments для переходов
 Ход работы:
 
- 
-
-Необходимо сделать Cubit, который в зависимости от текущей темы прибавляет +1 и отнимает -1 если светлая, если тёмная +2 и -2 соответственно. Результат и текущую тему необходимо вывести в List
-  
-  ![image](https://user-images.githubusercontent.com/92712690/204499043-e62c20cf-4627-48bb-8667-2b93be6d0cd5.png)
-
-Рисунок 42 – Форма
-
-![image](https://user-images.githubusercontent.com/92712690/204499360-7ce48103-6ffe-4ff7-b67b-ea8e829c2975.png)
+Для того, чтобы данные задавать используется set, а для получения get.
  
-Рисунок 43 - Прибавление
+ ![image](https://user-images.githubusercontent.com/92712690/205897295-5bcfa3c2-2f7a-4595-b3ce-4f97f8c4058b.png)
 
- ![image](https://user-images.githubusercontent.com/92712690/204499379-c200ce8f-cb91-4cf6-8b72-c00d9c175430.png)
-
-Рисунок 44 – Уменьшение
-
- ![image](https://user-images.githubusercontent.com/92712690/204499408-d3e4f4db-a88f-424c-ac42-ee60e0d61930.png)
-
-Рисунок 46 – Прибавление
+Рисунок 47 - get и set
+Благодаря SharedPreference, данные сохраняются даже при выходе с приложения
  
- ![image](https://user-images.githubusercontent.com/92712690/204499437-b5e03f96-42a2-45b0-ae9a-ae083b68de8d.png)
+ ![image](https://user-images.githubusercontent.com/92712690/205897362-45990313-5137-4c47-a5b3-eec80c14200c.png)
 
-Рисунок 47 – Убавление
-Вывод: В процессе практической работы был изучен принцип работы Cubit и Bloc и выполнены задания.
+Рисунок 48 – Вёрстка
+Присутствует рабочий счётчик
+ 
+ ![image](https://user-images.githubusercontent.com/92712690/205897392-b8d849d2-8876-4565-a86e-8d3e21d72f9e.png)
+
+Рисунок 49 - Счетчик
+При переходе, с помощью arguments, данные передаются и получаются 
+
+ ![image](https://user-images.githubusercontent.com/92712690/205897410-9df574f9-8416-442e-8308-de668dc0bb69.png)
+
+Рисунок 50 - Переданные значения
+Сами arguments были использованы, что передать лист объектов (какое-либо сообщение и значение счётчика)
+Вывод: В процессе практической работы был изучен принцип работы SharedPreference и arguments.
